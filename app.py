@@ -30,30 +30,22 @@ def predict():
             image = request.files['image']
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
             image.save(image_path)
-            image_size = os.stat(image_path).st_size
-            image_type = image.filename.split('.')[-1]
-            image_format = ['jpg', 'jpeg', 'png', 'JPEG', 'JPG']
+            # image_size = os.stat(image_path).st_size
 
-            if image_type in image_format:
-                img = load_img(image_path, target_size=(224, 224))
-                img_array = img_to_array(img) / 255.0
-                img_array = tf.expand_dims(img_array, 0)
+            img = load_img(image_path, target_size=(224, 224))
+            img_array = img_to_array(img) / 255.0
+            img_array = tf.expand_dims(img_array, 0)
 
-                motives_list = list(class_dict.keys())
-                prediction = model.predict(img_array)
-                pred_idx = np.argmax(prediction)
-                pred_motive = motives_list[pred_idx]
-                pred_confidence = prediction[0][pred_idx] * 100
+            motives_list = list(class_dict.keys())
+            prediction = model.predict(img_array)
+            pred_idx = np.argmax(prediction)
+            pred_motive = motives_list[pred_idx]
+            pred_confidence = prediction[0][pred_idx] * 100
 
-                classification = (pred_motive, round(pred_confidence, 2))
-                # print(classification)
+            classification = (pred_motive, round(pred_confidence, 2))
+            # print(classification)
 
-                if image_size <= 2024000:
-                    return render_template('index.html', uploaded_image=image.filename, data=classification)
-                else:
-                    return render_template('index.html', warning=['Ukuran gambar harus kurang dari 2 mb!'])
-            else:
-                return render_template('index.html', warning=['Format harus .jpg, .png, dan .jpeg'])
+            return render_template('index.html', uploaded_image=image.filename, data=classification)
 
 @app.route('/display/<filename>')
 def send_uploaded_image(filename=''):
