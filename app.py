@@ -32,7 +32,7 @@ def predict():
             image.save(image_path)
             image_size = os.stat(image_path).st_size
             image_type = image.filename.split('.')[-1]
-            image_format = ['jpg', 'jpeg', 'png']
+            image_format = ['jpg', 'jpeg', 'png', 'JPEG', 'JPG']
 
             if image_type in image_format:
                 img = load_img(image_path, target_size=(224, 224))
