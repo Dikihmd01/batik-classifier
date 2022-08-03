@@ -18,7 +18,7 @@
           <div class="col-md-5 border border-secondary mt-4">
             <h1 class="text-center mt-4">Klasifikasi Batik Indonesia</h1>
             <form action="/predict" method="post", enctype="multipart/form-data">
-              <input type="file" class="form-control" name="image" required>
+              <input type="file" class="form-control" name="image" required lang="ko">
               <input type="submit" class="btn btn-primary mt-3 mb-3" value="Prediksi">
             </form>
           </div>
@@ -48,6 +48,13 @@
                       </table>
                   </div>
               </div>
+          </div>
+          {% endif %}
+
+
+          {% if warning %}
+          <div class="mt-3 col-md-5 alert alert-warning">
+              {{ warning[0] }}
           </div>
           {% endif %}
       </div>
