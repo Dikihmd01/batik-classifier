@@ -8,6 +8,23 @@ from keras.models import load_model
 from keras_preprocessing.image import img_to_array, load_img
 
 app = Flask(__name__)
+dir_name = 'static'
+
+if os.path.exists(dir_name):
+    if os.path.exists('static/uploads'):
+        print('uploads dir ada!')
+    else:
+        os.mkdir('static/uploads')
+        print("tidak ada")
+    # print('exist!')
+else:
+    os.mkdir(dir_name)
+    if os.path.exists('static/uploads'):
+        print('uploads dir ada!')
+    else:
+        os.mkdir('static/uploads')
+        print("tidak ada")
+
 app.config['UPLOAD_FOLDER'] = './static/uploads/'
 model = load_model('./model/model_batik_10_kelas.h5')
 
